@@ -1,0 +1,5 @@
+create table tb_order (id number(19,0) generated as identity, address varchar2(255 char), latitude double precision, longitude double precision, moment timestamp, status number(10,0), primary key (id));
+create table tb_order_product (order_id number(19,0) not null, product_id number(19,0) not null, primary key (order_id, product_id));
+create table tb_product (id number(19,0) generated as identity, description varchar2(255 char), image_uri varchar2(255 char), name varchar2(255 char), price double precision, primary key (id));
+alter table tb_order_product add constraint FKsu03ywlcvyqg5y78qey2q25lc foreign key (product_id) references tb_product;
+alter table tb_order_product add constraint FK40anaevs16kmc2tbh7wc511fq foreign key (order_id) references tb_order;
