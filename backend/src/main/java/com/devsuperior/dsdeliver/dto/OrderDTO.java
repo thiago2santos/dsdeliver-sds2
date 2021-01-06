@@ -1,6 +1,9 @@
 package com.devsuperior.dsdeliver.dto;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.devsuperior.dsdeliver.entities.Order;
 import com.devsuperior.dsdeliver.enums.OrderStatus;
@@ -14,11 +17,12 @@ public class OrderDTO {
 	private Instant moment;
 	private OrderStatus status;
 
+	private List<ProductDTO> products = new ArrayList<>();
+
 	public OrderDTO() {
 	}
 
 	public OrderDTO(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status) {
-		super();
 		this.id = id;
 		this.address = address;
 		this.latitude = latitude;
@@ -28,13 +32,14 @@ public class OrderDTO {
 	}
 
 	public OrderDTO(Order entity) {
-		super();
 		id = entity.getId();
 		address = entity.getAddress();
 		latitude = entity.getLatitude();
 		longitude = entity.getLatitude();
 		moment = entity.getMoment();
 		status = entity.getStatus();
+
+		products = entity.getProducts().stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
 	}
 
 	public Long getId() {
@@ -83,6 +88,10 @@ public class OrderDTO {
 
 	public void setStatus(OrderStatus status) {
 		this.status = status;
+	}
+
+	public List<ProductDTO> getProducts() {
+		return products;
 	}
 
 }
